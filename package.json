@@ -6,10 +6,13 @@
     "@types/jest": "24.0.18",
     "@types/node": "12.7.11",
     "@types/react": "16.9.4",
+    "@types/react-big-calendar": "^0.22.3",
     "@types/react-dom": "16.9.1",
-    "dgraph-js-http": "^1.1.0-rc18",
+    "axios": "^0.19.0",
+    "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.10.1",
+    "react-big-calendar": "^0.22.1",
     "react-dom": "^16.10.1",
     "react-scripts": "3.2.0",
     "typescript": "3.6.3"
@@ -20,6 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:4000/",
   "eslintConfig": {
     "extends": "react-app"
   },
