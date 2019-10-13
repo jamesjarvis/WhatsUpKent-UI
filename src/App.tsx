@@ -4,6 +4,7 @@ import { Event } from 'react-big-calendar';
 import './App.scss';
 import MyCalendar from './components/Calendar/Calendar';
 import { getAllThisWeek } from './interface/api';
+import FilterView from './components/Filter/Filter';
 
 
 const App: React.FC = () => {
@@ -30,6 +31,9 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      <div className="filterHolder">
+        <FilterView />
+      </div>
       <MyCalendar eventList={events} />
     </div>
   );
