@@ -7,6 +7,7 @@ export interface Module {
   code: string;
   name?: string;
   subject?: string;
+  events?: Array<DBEvent>;
 }
 
 export interface Person {
@@ -23,7 +24,7 @@ export interface Location {
 export interface Scrape {
   id: number;
   lastScraped?: Date;
-  foundEvent?: [DBEvent];
+  foundEvent?: Array<DBEvent>;
 }
 
 export interface DBEvent {

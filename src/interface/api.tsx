@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getSundayDate } from './utils';
+import { getSundayDate, Filter, spaceSeparatedList } from './utils';
 import { DBEvent, Module } from './db-types';
 
 export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
@@ -35,6 +35,47 @@ export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
     const response = await axios.post('/query', query);
     const body: {weekView: Array<DBEvent>} = response.data;
     return body.weekView;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getFilteredThisWeekExact(f: Filter): Promise<DBEvent[] | null> {
+  const moduleCodes = f.moduleCodes.length > 0 ? `@filter(eq(module.code, [${f.moduleCodes.toString()}]))` : '';
+  const eventTerms = f.eventTypes.length > 0 ? `and anyofterms(event.title, ${spaceSeparatedList(f.eventTypes)})` : '';
+  const query = `
+  {
+    filteredWeekView(func: has(module.subject), orderasc: module.subject, orderasc: module.code) ${moduleCodes}{
+      code: module.code
+      subject: module.subject
+      name: module.name
+      events: ~event.part_of_module @filter(gt(event.start_date,${f.startDate.toISOString().split('T')[0]}) and le(event.end_date, ${f.endDate.toISOString().split('T')[0]}) ${eventTerms}) {
+        id: event.id
+        title: event.title
+        description: event.description
+        startDate: event.start_date
+        endDate: event.end_date
+        location: event.location {
+          name: location.name
+          id: location.id
+          disabledAccess: location.disabled_access
+        }
+      }
+    }
+  }
+  `;
+  try {
+    const response = await axios.post('/query', query);
+    const body: {filteredWeekView: Array<Module>} = response.data;
+    const events = new Array<DBEvent>();
+    body.filteredWeekView.forEach((mod: Module) => {
+      if (mod.events) {
+        mod.events.forEach((event) => {
+          events.push(event);
+        });
+      }
+    });
+    return events;
   } catch (error) {
     return null;
   }

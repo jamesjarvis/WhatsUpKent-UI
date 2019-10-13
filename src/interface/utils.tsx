@@ -17,3 +17,18 @@ export function getSundayDate(d: Date): Date {
   const diff = tempd.getDate() - day;
   return new Date(tempd.setDate(diff));
 }
+
+export function spaceSeparatedList(as: Array<string>): string {
+  let temp = '';
+  as.forEach((s) => {
+    temp = `${temp + s} `;
+  });
+  return temp;
+}
+
+export interface Filter {
+  startDate: Date;
+  endDate: Date;
+  moduleCodes: Array<string>;
+  eventTypes: Array<string>;
+}
