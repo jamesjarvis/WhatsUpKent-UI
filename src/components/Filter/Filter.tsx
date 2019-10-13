@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { getAllLectureTypes, getAllModules } from '../../interface/api';
+import { getAllLectureTypes, getAllSubjects } from '../../interface/api';
 import './Filter.scss';
-import { Module } from '../../interface/db-types';
 
 interface SelectType {
   value: string;
@@ -27,20 +26,10 @@ function formatEventTypes(eventTypes: Array<string>): Array<SelectType> {
  *
  * @param modules Information about all modules associated with the events
  */
-function formatSubjectTypes(modules: Array<Module>): Array<GroupedSelectType> {
-  const tempSubTypes = new Array<GroupedSelectType>();
-  modules.forEach((mod: Module) => {
-    let found = false;
-    const newSelectType: SelectType = { value: mod.code, label: `${mod.code}: ${mod.name}` };
-    for (let i = 0; i < tempSubTypes.length; i += 1) {
-      if (tempSubTypes[i].label === mod.subject) {
-        found = true;
-        tempSubTypes[i].options.push(newSelectType);
-      }
-    }
-    if (!found) {
-      tempSubTypes.push({ label: mod.subject ? mod.subject : 'Other', options: new Array<SelectType>(newSelectType) });
-    }
+function formatSubjectTypes(subjects: Array<string>): Array<SelectType> {
+  const tempSubTypes = new Array<SelectType>();
+  subjects.forEach((val) => {
+    tempSubTypes.push({ value: val, label: val });
   });
   return tempSubTypes;
 }
@@ -60,7 +49,7 @@ const FilterView: React.FC = () => {
 
   const [availableSubjectTypes, setAvailableSubjectTypes] = useState();
   useEffect(() => {
-    getAllModules().then((data) => {
+    getAllSubjects().then((data) => {
       if (data) {
         setAvailableSubjectTypes(formatSubjectTypes(data));
       }

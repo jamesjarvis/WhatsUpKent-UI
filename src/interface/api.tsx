@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { getSundayDate, Filter, spaceSeparatedList } from './utils';
+import {
+  getSundayDate, Filter, spaceSeparatedList, commaSeparatedStrings,
+} from './utils';
 import { DBEvent, Module } from './db-types';
 
 export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
@@ -41,7 +43,7 @@ export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
 }
 
 export async function getFilteredThisWeekExact(f: Filter): Promise<DBEvent[] | null> {
-  const moduleCodes = f.moduleCodes.length > 0 ? `@filter(eq(module.code, [${f.moduleCodes.toString()}]))` : '';
+  const moduleCodes = f.subjects.length > 0 ? `@filter(eq(module.subject, [${commaSeparatedStrings(f.subjects)}]))` : '';
   const eventTerms = f.eventTypes.length > 0 ? `and anyofterms(event.title, ${spaceSeparatedList(f.eventTypes)})` : '';
   const query = `
   {
@@ -95,6 +97,29 @@ export async function getAllModules(): Promise<Module[] | null> {
     const response = await axios.post('/query', query);
     const body: {modules: Array<Module>} = response.data;
     return body.modules;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getAllSubjects(): Promise<string[] | null> {
+  const query = `
+  {
+    subjects(func: has(module.subject), orderasc: module.subject, first: 4000) {
+      subject: module.subject
+    }
+  }
+  `;
+  try {
+    const response = await axios.post('/query', query);
+    const body: {subjects: Array<{subject: string}>} = response.data;
+    const temp = new Array<string>();
+    body.subjects.forEach((thing) => {
+      if (!temp.includes(thing.subject)) {
+        temp.push(thing.subject);
+      }
+    });
+    return temp;
   } catch (error) {
     return null;
   }
