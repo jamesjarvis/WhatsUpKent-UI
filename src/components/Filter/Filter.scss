@@ -1,0 +1,10 @@
+.filterView {
+  display: flex;
+  align-items: center;
+  
+  .selector {
+    margin: 10px;
+    min-width: 140px;
+    max-width: 220px;
+  }
+}
