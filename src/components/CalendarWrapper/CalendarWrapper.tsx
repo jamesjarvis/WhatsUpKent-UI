@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Event } from 'react-big-calendar';
 import MyCalendar from '../Calendar/Calendar';
-import { getAllThisWeek } from '../../interface/api';
+import { getFilteredThisWeekExact } from '../../interface/api';
 import FilterContext from '../Contexts/FilterContext';
 
 
@@ -15,7 +15,7 @@ const CalendarWrapper: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    getAllThisWeek(new Date()).then((result) => {
+    getFilteredThisWeekExact(filterState).then((result) => {
       if (result) {
         const tempEvents = new Array<Event>();
         result.map((thing) => {
