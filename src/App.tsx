@@ -1,40 +1,21 @@
-import React, { useEffect, useState } from 'react';
-// import {DBEvent} from './interface/db-types';
-import { Event } from 'react-big-calendar';
+import React, { useReducer } from 'react';
 import './App.scss';
-import MyCalendar from './components/Calendar/Calendar';
-import { getAllThisWeek } from './interface/api';
 import FilterView from './components/Filter/Filter';
+import CalendarWrapper from './components/CalendarWrapper/CalendarWrapper';
+import FilterContext, { defaultFilter, reducer, init } from './components/Contexts/FilterContext';
 
 
 const App: React.FC = () => {
-  const [events, setEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    getAllThisWeek(new Date()).then((result) => {
-      if (result) {
-        const tempEvents = new Array<Event>();
-        result.map((thing) => {
-          const tempEvent: Event = {
-            allDay: false,
-            title: thing.title,
-            start: new Date(thing.startDate),
-            end: new Date(thing.endDate),
-          };
-          tempEvents.push(tempEvent);
-          return result;
-        });
-        setEvents(tempEvents);
-      }
-    });
-  }, []);
+  const [filterState, dispatch] = useReducer(reducer, defaultFilter, init);
 
   return (
     <div className="App">
-      <div className="filterHolder">
-        <FilterView />
-      </div>
-      <MyCalendar eventList={events} />
+      <FilterContext.Provider value={{ filterState, dispatch }}>
+        <div className="filterHolder">
+          <FilterView />
+        </div>
+        <CalendarWrapper />
+      </FilterContext.Provider>
     </div>
   );
 };

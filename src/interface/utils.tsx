@@ -1,13 +1,3 @@
-export function getMondayDate(d: Date): Date {
-  const tempd = new Date(d);
-  tempd.setHours(5);
-  tempd.setMinutes(0);
-  tempd.setSeconds(0);
-  const day = tempd.getDay();
-  const diff = tempd.getDate() - day + (day === 0 ? -6 : 1);// adjust when day is sunday
-  return new Date(tempd.setDate(diff));
-}
-
 export function getSundayDate(d: Date): Date {
   const tempd = new Date(d);
   tempd.setHours(5);
@@ -15,6 +5,16 @@ export function getSundayDate(d: Date): Date {
   tempd.setSeconds(0);
   const day = tempd.getDay();
   const diff = tempd.getDate() - day;
+  return new Date(tempd.setDate(diff));
+}
+
+export function getEndOfWeek(d: Date): Date {
+  const tempd = new Date(d);
+  tempd.setHours(5);
+  tempd.setMinutes(0);
+  tempd.setSeconds(0);
+  const day = tempd.getDay();
+  const diff = tempd.getDate() + (6 - day);
   return new Date(tempd.setDate(diff));
 }
 
