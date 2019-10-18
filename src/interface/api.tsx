@@ -44,7 +44,7 @@ export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
 
 export async function getFilteredThisWeekExact(f: Filter): Promise<DBEvent[] | null> {
   const moduleCodes = f.subjects.length > 0 ? `@filter(eq(module.subject, [${commaSeparatedStrings(f.subjects)}]))` : '';
-  const eventTerms = f.eventTypes.length > 0 ? `and anyofterms(event.title, ${spaceSeparatedList(f.eventTypes)})` : '';
+  const eventTerms = f.eventTypes.length > 0 ? `and anyofterms(event.title, "${spaceSeparatedList(f.eventTypes)}")` : '';
   const query = `
   {
     filteredWeekView(func: has(module.subject), orderasc: module.subject, orderasc: module.code) ${moduleCodes}{
@@ -67,7 +67,7 @@ export async function getFilteredThisWeekExact(f: Filter): Promise<DBEvent[] | n
   }
   `;
   try {
-    const response = await axios.post('/query', query);
+    const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
     const body: {filteredWeekView: Array<Module>} = response.data;
     const events = new Array<DBEvent>();
     body.filteredWeekView.forEach((mod: Module) => {
@@ -94,7 +94,7 @@ export async function getAllModules(): Promise<Module[] | null> {
   }
   `;
   try {
-    const response = await axios.post('/query', query);
+    const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
     const body: {modules: Array<Module>} = response.data;
     return body.modules;
   } catch (error) {
@@ -111,7 +111,7 @@ export async function getAllSubjects(): Promise<string[] | null> {
   }
   `;
   try {
-    const response = await axios.post('/query', query);
+    const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
     const body: {subjects: Array<{subject: string}>} = response.data;
     const temp = new Array<string>();
     body.subjects.forEach((thing) => {
