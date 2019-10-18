@@ -49,7 +49,7 @@ const FilterView: React.FC = () => {
       startDate: filterState.startDate,
       endDate: filterState.endDate,
       subjects: filterState.subjects,
-      eventTypes: selectedOption,
+      eventTypes: selectedOption || [],
     };
     dispatch({ type: ActionType.UPDATE, payload: temp });
   };
@@ -69,7 +69,7 @@ const FilterView: React.FC = () => {
     const temp: Filter = {
       startDate: filterState.startDate,
       endDate: filterState.endDate,
-      subjects: selectedOption,
+      subjects: selectedOption || [],
       eventTypes: filterState.eventTypes,
     };
     dispatch({ type: ActionType.UPDATE, payload: temp });

@@ -1,11 +1,13 @@
 import React, { createContext } from 'react';
-import { getSundayDate, getEndOfWeek, Filter } from '../../interface/utils';
+import {
+  getSundayDate, getEndOfWeek, Filter, SelectValueType,
+} from '../../interface/utils';
 
 export const defaultFilter: Filter = {
   startDate: getSundayDate(new Date()),
   endDate: getEndOfWeek(new Date()),
-  subjects: new Array<string>(),
-  eventTypes: new Array<string>(),
+  subjects: new Array<SelectValueType>(),
+  eventTypes: new Array<SelectValueType>(),
 };
 
 export enum ActionType {
