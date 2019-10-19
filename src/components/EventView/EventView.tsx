@@ -1,5 +1,6 @@
 import React from 'react';
 import { MyEvent } from '../../interface/db-types';
+import { formatDateRangeString } from '../../interface/utils';
 import './EventView.scss';
 
 interface EventViewProps {
@@ -9,28 +10,52 @@ interface EventViewProps {
 const EventView: React.FC<EventViewProps> = ({ event }) => (
   <div className="eventHolder">
     <div className="eventSection">
-      <div>
-        T
+      <div className="eventSectionIcon">
+        T:
       </div>
-      <div>
-        {event && event.title}
+      <div className="eventSectionDeepdive">
+        <span className="bold1">
+          {event && event.title}
+        </span>
+        <span className="quiet1">
+          {event && event.module && event.module[0].name}
+        </span>
+        <span className="quiet2">
+          {event && event.module && event.module[0].subject}
+        </span>
       </div>
     </div>
     <div className="eventSection">
-      <div>
-        L
+      <div className="eventSectionIcon">
+        W:
       </div>
-      <div>
-        {event && event.location && event.location[0].id}
-        {event && event.location && event.location[0].name}
+      <div className="eventSectionDeepdive">
+        <span className="quiet1">
+          {event && formatDateRangeString(event.start, event.end)}
+        </span>
       </div>
     </div>
     <div className="eventSection">
-      <div>
-        D
+      <div className="eventSectionIcon">
+        L:
       </div>
-      <div>
-        {event && event.description}
+      <div className="eventSectionDeepdive">
+        <span className="quiet1">
+          {event && event.location && event.location[0].id}
+        </span>
+        <span className="quiet2">
+          {event && event.location && event.location[0].name}
+        </span>
+      </div>
+    </div>
+    <div className="eventSection">
+      <div className="eventSectionIcon">
+        D:
+      </div>
+      <div className="eventSectionDeepdive">
+        <span>
+          {event && event.description}
+        </span>
       </div>
     </div>
   </div>

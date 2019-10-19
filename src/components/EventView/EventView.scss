@@ -1,7 +1,31 @@
 .eventHolder {
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 
   .eventSection {
-    
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+
+    .eventSectionIcon {
+      margin-right: 20px;
+    }
+
+    .eventSectionDeepdive {
+      display: flex;
+      flex-direction: column;
+
+      .bold1 {
+        font-size: 1.5em;
+      }
+      .quiet1 {
+        color: lighten($color: #000000, $amount: 30)
+      }
+      .quiet2 {
+        font-size: 0.8em;
+      }
+    }
   }
 }

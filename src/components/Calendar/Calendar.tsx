@@ -99,12 +99,12 @@ const MyCalendar: React.FC<MyCalendarProps> = ({ eventList }) => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: 'top',
+          horizontal: 'left',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'right',
         }}
       >
         <EventView event={selectedEvent} />
