@@ -1,3 +1,5 @@
+import { Event } from 'react-big-calendar';
+
 export interface Error {
   Status: string;
   Error: string;
@@ -27,6 +29,9 @@ export interface Scrape {
   foundEvent?: Array<DBEvent>;
 }
 
+/**
+ * DBEvent is the event type when recieved from the database
+ */
 export interface DBEvent {
   id: string;
   title?: string;
@@ -34,6 +39,16 @@ export interface DBEvent {
   startDate: Date;
   endDate: Date;
   organiser?: [Person];
+  module?: [Module];
+  location?: [Location];
+}
+
+/**
+ * MyEvent is the event type when shown in the calendar.
+ */
+export interface MyEvent extends Event {
+  id?: string;
+  description?: string;
   module?: [Module];
   location?: [Location];
 }

@@ -37,6 +37,20 @@ export function commaSeparatedStrings(as: Array<SelectValueType>): string {
   return temp;
 }
 
+function formatTime(d: Date): string {
+  const minutes = String(d.getMinutes());
+  return `${d.getHours()}:${minutes.padStart(2, '0')}`;
+}
+
+export function formatDateRangeString(start: Date | undefined, end: Date | undefined): string {
+  if (!start || !end) {
+    return '';
+  }
+  const startString = start.toDateString();
+  const timeString = `${formatTime(start)} - ${formatTime(end)}`;
+  return `${startString} ⋅ ${timeString}`;
+}
+
 export interface SelectValueType {
   label: string;
   value: string;

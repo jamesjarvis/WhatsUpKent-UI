@@ -72,8 +72,15 @@ export async function getFilteredThisWeekExact(f: Filter): Promise<DBEvent[] | n
     const events = new Array<DBEvent>();
     body.filteredWeekView.forEach((mod: Module) => {
       if (mod.events) {
+        const tempMod: Module = {
+          code: mod.code,
+          name: mod.name,
+          subject: mod.subject,
+        };
         mod.events.forEach((event) => {
-          events.push(event);
+          const tempEvent = event;
+          tempEvent.module = [tempMod];
+          events.push(tempEvent);
         });
       }
     });
