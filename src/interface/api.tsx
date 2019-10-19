@@ -47,7 +47,7 @@ export async function getFilteredThisWeekExact(f: Filter): Promise<DBEvent[] | n
   const eventTerms = f.eventTypes.length > 0 ? `and anyofterms(event.title, "${spaceSeparatedList(f.eventTypes)}")` : '';
   const query = `
   {
-    filteredWeekView(func: has(module.subject), orderasc: module.subject, orderasc: module.code) ${moduleCodes}{
+    filteredWeekView(func: has(module.subject), orderasc: module.subject, orderasc: module.code, first: 2000) ${moduleCodes}{
       code: module.code
       subject: module.subject
       name: module.name

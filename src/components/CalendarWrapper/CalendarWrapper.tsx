@@ -10,7 +10,7 @@ import FilterContext from '../Contexts/FilterContext';
  * then retrieves that data from the database and passes it onto the calendar view
  */
 const CalendarWrapper: React.FC = () => {
-  const { filterState, dispatch } = useContext(FilterContext);
+  const { filterState } = useContext(FilterContext);
 
   const [events, setEvents] = useState<Event[]>([]);
 
