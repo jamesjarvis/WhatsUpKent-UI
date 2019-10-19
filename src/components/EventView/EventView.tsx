@@ -1,4 +1,8 @@
 import React from 'react';
+import SubjectOutlinedIcon from '@material-ui/icons/SubjectOutlined';
+import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
+import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { MyEvent } from '../../interface/db-types';
 import { formatDateRangeString } from '../../interface/utils';
 import './EventView.scss';
@@ -11,7 +15,7 @@ const EventView: React.FC<EventViewProps> = ({ event }) => (
   <div className="eventHolder">
     <div className="eventSection">
       <div className="eventSectionIcon">
-        T:
+        <InfoOutlinedIcon fontSize="small" />
       </div>
       <div className="eventSectionDeepdive">
         <span className="bold1">
@@ -27,7 +31,7 @@ const EventView: React.FC<EventViewProps> = ({ event }) => (
     </div>
     <div className="eventSection">
       <div className="eventSectionIcon">
-        W:
+        <EventOutlinedIcon fontSize="small" />
       </div>
       <div className="eventSectionDeepdive">
         <span className="quiet1">
@@ -37,7 +41,7 @@ const EventView: React.FC<EventViewProps> = ({ event }) => (
     </div>
     <div className="eventSection">
       <div className="eventSectionIcon">
-        L:
+        <RoomOutlinedIcon fontSize="small" />
       </div>
       <div className="eventSectionDeepdive">
         <span className="quiet1">
@@ -50,7 +54,7 @@ const EventView: React.FC<EventViewProps> = ({ event }) => (
     </div>
     <div className="eventSection">
       <div className="eventSectionIcon">
-        D:
+        <SubjectOutlinedIcon fontSize="small" />
       </div>
       <div className="eventSectionDeepdive">
         <span>
