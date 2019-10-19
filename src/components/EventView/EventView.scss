@@ -1,5 +1,5 @@
 .eventHolder {
-  max-width: 400px;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   margin: 10px;
@@ -16,6 +16,10 @@
     .eventSectionDeepdive {
       display: flex;
       flex-direction: column;
+      margin-right: 10px;
+      div {
+        word-wrap: break-word;
+      }
 
       .bold1 {
         font-size: 1.5em;

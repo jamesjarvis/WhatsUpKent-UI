@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import SubjectOutlinedIcon from '@material-ui/icons/SubjectOutlined';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
@@ -9,6 +9,21 @@ import './EventView.scss';
 
 interface EventViewProps {
   event: MyEvent | null;
+}
+
+function newlineToBreak(s: string | undefined): JSX.Element[] {
+  if (s) {
+    return s.split('\\n').map((value, index) => {
+      const rand = Math.random() * 100 * index;
+      return (
+        <Fragment key={rand}>
+          {value}
+          <br />
+        </Fragment>
+      );
+    });
+  }
+  return [];
 }
 
 const EventView: React.FC<EventViewProps> = ({ event }) => (
@@ -57,9 +72,9 @@ const EventView: React.FC<EventViewProps> = ({ event }) => (
         <SubjectOutlinedIcon fontSize="small" />
       </div>
       <div className="eventSectionDeepdive">
-        <span>
-          {event && event.description}
-        </span>
+        <div>
+          {event && newlineToBreak(event.description)}
+        </div>
       </div>
     </div>
   </div>
