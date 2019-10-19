@@ -1,12 +1,14 @@
 import {
-  Calendar, momentLocalizer, Event, stringOrDate,
+  Calendar, momentLocalizer, Event,
 } from 'react-big-calendar';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import moment from 'moment';
-// import {Event} from './interface/db-types'
+import Popover from '@material-ui/core/Popover';
 import './Calendar.scss';
 import FilterContext, { ActionType } from '../Contexts/FilterContext';
 import { Filter, getSundayDate, getEndOfWeek } from '../../interface/utils';
+import EventView from '../EventView/EventView';
+import { MyEvent } from '../../interface/db-types';
 
 const localiser = momentLocalizer(moment);
 
@@ -16,6 +18,17 @@ interface MyCalendarProps {
 
 const MyCalendar: React.FC<MyCalendarProps> = ({ eventList }) => {
   const { filterState, dispatch } = useContext(FilterContext);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const handleClick = (event: React.SyntheticEvent<HTMLElement>): void => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = (): void => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const [selectedEvent, setSelectedEvent] = useState<MyEvent | null>(null);
 
   const currentDate = new Date(Date.now());
   const am = new Date(Date.now());
@@ -75,7 +88,27 @@ const MyCalendar: React.FC<MyCalendarProps> = ({ eventList }) => {
         min={am}
         max={pm}
         onRangeChange={dateChange}
+        onSelectEvent={(event: MyEvent, e): void => {
+          setSelectedEvent(event);
+          handleClick(e);
+        }}
       />
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <EventView event={selectedEvent} />
+      </Popover>
     </div>
   );
 };
