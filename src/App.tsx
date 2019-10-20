@@ -1,23 +1,25 @@
-import React, { useReducer } from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import './App.scss';
-import FilterView from './components/Filter/Filter';
-import CalendarWrapper from './components/CalendarWrapper/CalendarWrapper';
-import FilterContext, { defaultFilter, reducer, init } from './components/Contexts/FilterContext';
+import MainView from './pages/MainView/MainView';
 
 
-const App: React.FC = () => {
-  const [filterState, dispatch] = useReducer(reducer, defaultFilter, init);
-
-  return (
-    <div className="App">
-      <FilterContext.Provider value={{ filterState, dispatch }}>
-        <div className="filterHolder">
-          <FilterView />
-        </div>
-        <CalendarWrapper />
-      </FilterContext.Provider>
+const App: React.FC = () => (
+  <Router>
+    <div id="App">
+      <Switch>
+        <Route exact path="/" component={MainView} />
+        <Route path="*">
+          <Redirect to="/" />
+        </Route>
+      </Switch>
     </div>
-  );
-};
+  </Router>
+);
 
 export default App;
