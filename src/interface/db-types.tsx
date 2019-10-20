@@ -51,4 +51,5 @@ export interface MyEvent extends Event {
   description?: string;
   module?: [Module];
   location?: [Location];
+  colour: string;
 }

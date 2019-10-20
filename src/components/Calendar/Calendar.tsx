@@ -1,5 +1,5 @@
 import {
-  Calendar, momentLocalizer, Event,
+  Calendar, momentLocalizer, Event, EventPropGetter, stringOrDate,
 } from 'react-big-calendar';
 import React, { useContext, useState } from 'react';
 import moment from 'moment';
@@ -13,8 +13,29 @@ import { MyEvent } from '../../interface/db-types';
 const localiser = momentLocalizer(moment);
 
 interface MyCalendarProps {
-  eventList: Event[];
+  eventList: MyEvent[];
 }
+
+const CustomEventView = ({ event }: { event: MyEvent}) => (
+  <span className="customEventView">
+    <strong>{event.title}</strong>
+    {event.location && `:  ${event.location[0].id}`}
+  </span>
+);
+
+const eventStyle: EventPropGetter<MyEvent> = (
+  event: MyEvent,
+  start: stringOrDate, end: stringOrDate, isSelected: boolean,
+): { className?: string; style?: React.CSSProperties } => {
+  if (!event.colour) {
+    return {};
+  }
+  return {
+    style: {
+      backgroundColor: event.colour,
+    },
+  };
+};
 
 const MyCalendar: React.FC<MyCalendarProps> = ({ eventList }) => {
   const { filterState, dispatch } = useContext(FilterContext);
@@ -92,6 +113,10 @@ const MyCalendar: React.FC<MyCalendarProps> = ({ eventList }) => {
           setSelectedEvent(event);
           handleClick(e);
         }}
+        components={{
+          event: CustomEventView,
+        }}
+        eventPropGetter={eventStyle}
       />
       <Popover
         id={id}
