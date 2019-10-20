@@ -1,23 +1,31 @@
-import React, { useReducer } from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import './App.scss';
-import FilterView from './components/Filter/Filter';
-import CalendarWrapper from './components/CalendarWrapper/CalendarWrapper';
-import FilterContext, { defaultFilter, reducer, init } from './components/Contexts/FilterContext';
+import { MuiThemeProvider } from '@material-ui/core';
+import MainView from './pages/MainView/MainView';
+import Header from './components/Header/Header';
+import theme from './interface/theme';
 
 
-const App: React.FC = () => {
-  const [filterState, dispatch] = useReducer(reducer, defaultFilter, init);
-
-  return (
-    <div className="App">
-      <FilterContext.Provider value={{ filterState, dispatch }}>
-        <div className="filterHolder">
-          <FilterView />
-        </div>
-        <CalendarWrapper />
-      </FilterContext.Provider>
-    </div>
-  );
-};
+const App: React.FC = () => (
+  <Router>
+    <MuiThemeProvider theme={theme}>
+      <div id="App">
+        <Header />
+        <Switch>
+          <Route exact path="/" component={MainView} />
+          <Route path="*">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
+      </div>
+    </MuiThemeProvider>
+  </Router>
+);
 
 export default App;
