@@ -10,20 +10,22 @@ import { MuiThemeProvider } from '@material-ui/core';
 import MainView from './pages/MainView/MainView';
 import Header from './components/Header/Header';
 import theme from './interface/theme';
+import Footer from './components/Footer/Footer';
 
 
 const App: React.FC = () => (
   <Router>
     <MuiThemeProvider theme={theme}>
-      <div id="App">
-        <Header />
+      <Header />
+      <main>
         <Switch>
           <Route exact path="/" component={MainView} />
           <Route path="*">
             <Redirect to="/" />
           </Route>
         </Switch>
-      </div>
+      </main>
+      <Footer />
     </MuiThemeProvider>
   </Router>
 );
