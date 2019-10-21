@@ -14,7 +14,11 @@ const Header: React.FC = () => (
             WhatsUpKent
       </Typography>
       <Tooltip title="View on GitHub" placement="left">
-        <IconButton href="https://github.com/jamesjarvis/WhatsUpKent-UI">
+        <IconButton
+          href="https://github.com/jamesjarvis/WhatsUpKent-UI"
+          target="_blank"
+          rel="noopener"
+        >
           <GitHubIcon />
         </IconButton>
       </Tooltip>
