@@ -46,25 +46,21 @@ export async function getFilteredThisWeekExact(f: Filter): Promise<DBEvent[] | n
   const moduleCodes = f.subjects.length > 0 ? `@filter(eq(module.subject, [${commaSeparatedStrings(f.subjects)}]))` : '';
   const eventTerms = f.eventTypes.length > 0 ? `and anyofterms(event.title, "${spaceSeparatedList(f.eventTypes)}")` : '';
   const query = `
-  {
-    filteredWeekView(func: has(module.subject), orderasc: module.subject, orderasc: module.code, first: 2000) ${moduleCodes}{
-      code: module.code
-      subject: module.subject
-      name: module.name
-      events: ~event.part_of_module @filter(gt(event.start_date,${f.startDate.toISOString().split('T')[0]}) and le(event.end_date, ${f.endDate.toISOString().split('T')[0]}) ${eventTerms}) {
-        id: event.id
-        title: event.title
-        description: event.description
-        startDate: event.start_date
-        endDate: event.end_date
-        location: event.location {
-          name: location.name
-          id: location.id
-          disabledAccess: location.disabled_access
-        }
-      }
-    }
-  }
+{filteredWeekView(func: has(module.subject), orderasc: module.subject, orderasc: module.code, first: 2000) ${moduleCodes}{
+code: module.code
+subject: module.subject
+name: module.name
+events: ~event.part_of_module @filter(gt(event.start_date,${f.startDate.toISOString().split('T')[0]}) and le(event.end_date, ${f.endDate.toISOString().split('T')[0]}) ${eventTerms}) {
+  id: event.id
+  title: event.title
+  description: event.description
+  startDate: event.start_date
+  endDate: event.end_date
+  location: event.location {
+    name: location.name
+    id: location.id
+    disabledAccess: location.disabled_access
+}}}}
   `;
   try {
     const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
@@ -111,12 +107,7 @@ export async function getAllModules(): Promise<Module[] | null> {
 
 export async function getAllSubjects(): Promise<string[] | null> {
   const query = `
-  {
-    subjects(func: has(module.subject), orderasc: module.subject, first: 4000) {
-      subject: module.subject
-    }
-  }
-  `;
+  {subjects(func: has(module.subject), orderasc: module.subject, first: 4000){subject: module.subject}}`;
   try {
     const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
     const body: {subjects: Array<{subject: string}>} = response.data;

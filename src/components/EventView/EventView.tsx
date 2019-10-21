@@ -3,6 +3,7 @@ import SubjectOutlinedIcon from '@material-ui/icons/SubjectOutlined';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Link from '@material-ui/core/Link';
 import { MyEvent } from '../../interface/db-types';
 import { formatDateRangeString } from '../../interface/utils';
 import './EventView.scss';
@@ -60,7 +61,13 @@ const EventView: React.FC<EventViewProps> = ({ event }) => (
       </div>
       <div className="eventSectionDeepdive">
         <span className="quiet1">
-          {event && event.location && event.location[0].id}
+          <Link
+            href={`http://www.kent.ac.uk/timetabling/rooms/room.html?room=${event && event.location && event.location[0].id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {event && event.location && event.location[0].id}
+          </Link>
         </span>
         <span className="quiet2">
           {event && event.location && event.location[0].name}
