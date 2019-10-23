@@ -11,7 +11,7 @@ const Footer: React.FC = () => (
         <a
           href="https://jamesjarvis.io"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
         >
           James Jarvis
           {' '}
