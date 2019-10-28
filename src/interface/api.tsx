@@ -4,6 +4,8 @@ import {
 } from './utils';
 import { DBEvent, Module } from './db-types';
 
+const API_URL = 'https://api.whatsupkent.com/';
+
 export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
   const sundayDate = getSundayDate(d);
   const saturdayDate = new Date(sundayDate);
@@ -34,7 +36,7 @@ export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
   }
   `;
   try {
-    const response = await axios.post('/query', query);
+    const response = await axios.post(API_URL, query);
     const body: {weekView: Array<DBEvent>} = response.data;
     return body.weekView;
   } catch (error) {
@@ -63,7 +65,7 @@ events: ~event.part_of_module @filter(gt(event.start_date,${f.startDate.toISOStr
 }}}}
   `;
   try {
-    const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
+    const response = await axios.post(API_URL, query, { headers: { 'Content-Type': 'application/json' } });
     const body: {filteredWeekView: Array<Module>} = response.data;
     const events = new Array<DBEvent>();
     body.filteredWeekView.forEach((mod: Module) => {
@@ -97,7 +99,7 @@ export async function getAllModules(): Promise<Module[] | null> {
   }
   `;
   try {
-    const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
+    const response = await axios.post(API_URL, query, { headers: { 'Content-Type': 'application/json' } });
     const body: {modules: Array<Module>} = response.data;
     return body.modules;
   } catch (error) {
@@ -109,7 +111,7 @@ export async function getAllSubjects(): Promise<string[] | null> {
   const query = `
   {subjects(func: has(module.subject), orderasc: module.subject, first: 4000){subject: module.subject}}`;
   try {
-    const response = await axios.post('/query', query, { headers: { 'Content-Type': 'application/json' } });
+    const response = await axios.post(API_URL, query, { headers: { 'Content-Type': 'application/json' } });
     const body: {subjects: Array<{subject: string}>} = response.data;
     const temp = new Array<string>();
     body.subjects.forEach((thing) => {
