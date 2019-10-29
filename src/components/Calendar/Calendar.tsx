@@ -107,7 +107,7 @@ const MyCalendar: React.FC<MyCalendarProps> = ({ eventList }) => {
           horizontal: 'right',
         }}
       >
-        <EventView event={selectedEvent} />
+        {selectedEvent && <EventView event={selectedEvent} />}
       </Popover>
     </div>
   );
