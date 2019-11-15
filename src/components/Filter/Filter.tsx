@@ -1,22 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Select from 'react-select';
 import { getAllLectureTypes, getAllSubjects } from '../../interface/api';
-import { Filter } from '../../interface/utils';
+import { Filter, SelectValueType, ActionType } from '../../interface/utils';
 import './Filter.scss';
-import FilterContext, { ActionType } from '../Contexts/FilterContext';
-
-interface SelectType {
-  value: string;
-  label: string;
-}
+import FilterContext from '../Contexts/FilterContext';
 
 interface GroupedSelectType {
   label: string;
-  options: Array<SelectType>;
+  options: Array<SelectValueType>;
 }
 
-function formatEventTypes(eventTypes: Array<string>): Array<SelectType> {
-  const tempSelectTypes = new Array<SelectType>();
+function formatEventTypes(eventTypes: Array<string>): Array<SelectValueType> {
+  const tempSelectTypes = new Array<SelectValueType>();
   eventTypes.forEach((val) => {
     tempSelectTypes.push({ value: val, label: val });
   });
@@ -28,8 +23,8 @@ function formatEventTypes(eventTypes: Array<string>): Array<SelectType> {
  *
  * @param modules Information about all modules associated with the events
  */
-function formatSubjectTypes(subjects: Array<string>): Array<SelectType> {
-  const tempSubTypes = new Array<SelectType>();
+function formatSubjectTypes(subjects: Array<string>): Array<SelectValueType> {
+  const tempSubTypes = new Array<SelectValueType>();
   subjects.forEach((val) => {
     tempSubTypes.push({ value: val, label: val });
   });
@@ -54,7 +49,6 @@ const FilterView: React.FC = () => {
     dispatch({ type: ActionType.UPDATE, payload: temp });
   };
 
-
   const [availableSubjectTypes, setAvailableSubjectTypes] = useState();
   useEffect(() => {
     getAllSubjects().then((data) => {
@@ -63,7 +57,6 @@ const FilterView: React.FC = () => {
       }
     });
   }, []);
-
 
   const handleSubjectChange = (selectedOption: any) => {
     const temp: Filter = {
@@ -78,9 +71,23 @@ const FilterView: React.FC = () => {
   return (
     <div className="filterView">
       <span>Show me</span>
-      <Select value={filterState.eventTypes} onChange={handleTypeChange} options={availableEventTypes} className="selector" placeholder="All" isMulti />
+      <Select
+        value={filterState.eventTypes}
+        onChange={handleTypeChange}
+        options={availableEventTypes}
+        className="selector"
+        placeholder="All"
+        isMulti
+      />
       <span>events for</span>
-      <Select value={filterState.subjects} onChange={handleSubjectChange} options={availableSubjectTypes} className="selector" placeholder="All subjects" isMulti />
+      <Select
+        value={filterState.subjects}
+        onChange={handleSubjectChange}
+        options={availableSubjectTypes}
+        className="selector"
+        placeholder="All subjects"
+        isMulti
+      />
     </div>
   );
 };

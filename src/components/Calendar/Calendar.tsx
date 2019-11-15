@@ -5,8 +5,10 @@ import React, { useContext, useState } from 'react';
 import moment from 'moment';
 import Popover from '@material-ui/core/Popover';
 import './Calendar.scss';
-import FilterContext, { ActionType } from '../Contexts/FilterContext';
-import { Filter, getSundayDate, getEndOfWeek } from '../../interface/utils';
+import FilterContext from '../Contexts/FilterContext';
+import {
+  Filter, getSundayDate, getEndOfWeek, ActionType,
+} from '../../interface/utils';
 import EventView from '../EventView/EventView';
 import { MyEvent } from '../../interface/db-types';
 

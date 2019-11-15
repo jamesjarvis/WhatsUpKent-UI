@@ -18,6 +18,14 @@ export function getEndOfWeek(d: Date): Date {
   return new Date(tempd.setDate(diff));
 }
 
+export function getCurrentHour(): Date {
+  const tempd = new Date();
+  tempd.setMinutes(0);
+  tempd.setSeconds(0);
+  tempd.setMilliseconds(0);
+  return tempd;
+}
+
 export function spaceSeparatedList(as: Array<SelectValueType>): string {
   let temp = '';
   as.forEach((s) => {
@@ -42,13 +50,20 @@ function formatTime(d: Date): string {
   return `${d.getHours()}:${minutes.padStart(2, '0')}`;
 }
 
-export function formatDateRangeString(start: Date | undefined, end: Date | undefined): string {
+export function formatDateRangeString(
+  start: Date | undefined,
+  end: Date | undefined,
+): string {
   if (!start || !end) {
     return '';
   }
   const startString = start.toDateString();
   const timeString = `${formatTime(start)} - ${formatTime(end)}`;
   return `${startString} ⋅ ${timeString}`;
+}
+
+export enum ActionType {
+  UPDATE,
 }
 
 export interface SelectValueType {
@@ -60,4 +75,14 @@ export interface Filter {
   endDate: Date;
   subjects: Array<SelectValueType>;
   eventTypes: Array<SelectValueType>;
+}
+
+export interface IntSelectValueType {
+  label: string;
+  value: number;
+}
+export interface RoomFilterState {
+  startDate: Date;
+  endDate: Date;
+  hours: IntSelectValueType;
 }

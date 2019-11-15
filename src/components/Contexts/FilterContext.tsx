@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import {
-  getSundayDate, getEndOfWeek, Filter, SelectValueType,
+  getSundayDate, getEndOfWeek, Filter, SelectValueType, ActionType,
 } from '../../interface/utils';
 
 export const defaultFilter: Filter = {
@@ -9,10 +9,6 @@ export const defaultFilter: Filter = {
   subjects: new Array<SelectValueType>(),
   eventTypes: new Array<SelectValueType>(),
 };
-
-export enum ActionType {
-  UPDATE,
-}
 
 interface ReducerType {
   payload: Filter;

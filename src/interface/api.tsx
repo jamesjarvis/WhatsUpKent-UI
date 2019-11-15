@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {
-  getSundayDate, Filter, spaceSeparatedList, commaSeparatedStrings,
+  getSundayDate, Filter, spaceSeparatedList, commaSeparatedStrings, RoomFilterState,
 } from './utils';
-import { DBEvent, Module } from './db-types';
+import { DBEvent, Module, Location } from './db-types';
 
-const API_URL = 'https://api.whatsupkent.com/';
+// const API_URL = 'https://api.whatsupkent.com/';
+const API_URL = 'http://localhost:4000';
 
 export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
   const sundayDate = getSundayDate(d);
@@ -124,6 +125,32 @@ export async function getAllSubjects(): Promise<string[] | null> {
     return null;
   }
 }
+
+export async function getRooms(f: RoomFilterState): Promise<Array<Location> | null> {
+  const query = `
+  {
+    var(func: eq(event.start_date,"${f.startDate.toISOString().split('T')[0]}")) @filter(not (lt(event.start_date, "${f.startDate.toISOString()}")and le(event.end_date, "${f.startDate.toISOString()}"))or(ge(event.start_date,"${f.endDate.toISOString()}")and(gt(event.end_date,"${f.startDate.toISOString()}"))))  {
+      locations as event.location  { 
+        location.id
+      }
+    }
+      
+    availableLocations(func: has(location.id), orderasc: location.id) @filter(not uid(locations)) {
+      id: location.id
+      name: location.name
+      disabledAccess: location.disabled_access
+    }
+  }
+  `;
+  try {
+    const response = await axios.post(API_URL, query, { headers: { 'Content-Type': 'application/json' } });
+    const body: {availableLocations: Array<Location>} = response.data;
+    return body.availableLocations;
+  } catch (error) {
+    return null;
+  }
+}
+
 
 export function getAllLectureTypes(): Array<string> {
   return ['LECTURE', 'SEMINAR', 'PRESENTATION', 'LAB', 'INDUCTION', 'PC', 'WORKSHOP', 'BOOKING', 'MEETING', 'PERFORMANCE', 'SCREENING', 'LECSEM', 'FIELDTRIP'];
