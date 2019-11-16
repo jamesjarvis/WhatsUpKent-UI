@@ -3,5 +3,10 @@
   .toolbar {
     display: flex;
     justify-content: space-between;
+
+    .mainText {
+      display: flex;
+      align-items: center;
+    }
   }
 }

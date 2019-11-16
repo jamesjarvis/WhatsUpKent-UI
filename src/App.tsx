@@ -8,6 +8,7 @@ import {
 import './App.scss';
 import { MuiThemeProvider } from '@material-ui/core';
 import MainView from './pages/MainView/MainView';
+import RoomFinder from './pages/RoomFinder/RoomFinder';
 import Header from './components/Header/Header';
 import theme from './interface/theme';
 import Footer from './components/Footer/Footer';
@@ -20,6 +21,7 @@ const App: React.FC = () => (
       <main>
         <Switch>
           <Route exact path="/" component={MainView} />
+          <Route exact path="/rooms" component={RoomFinder} />
           <Route path="*">
             <Redirect to="/" />
           </Route>

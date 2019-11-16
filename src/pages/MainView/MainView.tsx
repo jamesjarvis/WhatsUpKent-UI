@@ -1,9 +1,9 @@
-import React, { useReducer } from 'react';
-import './MainView.scss';
 import Typography from '@material-ui/core/Typography';
-import FilterView from '../../components/Filter/Filter';
+import React, { useReducer } from 'react';
 import CalendarWrapper from '../../components/CalendarWrapper/CalendarWrapper';
-import FilterContext, { defaultFilter, reducer, init } from '../../components/Contexts/FilterContext';
+import FilterContext, { defaultFilter, init, reducer } from '../../components/Contexts/FilterContext';
+import FilterView from '../../components/Filter/Filter';
+import './MainView.scss';
 
 const MainView: React.FC = () => {
   const [filterState, dispatch] = useReducer(reducer, defaultFilter, init);
