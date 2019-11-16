@@ -1,9 +1,13 @@
-.RoomView {
+.roomView {
     display: flex;
     flex-direction: column;
   
     .info {
       margin: 10px auto;
+    }
+
+    .filterHolder {
+      margin: auto;
     }
   
   }

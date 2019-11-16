@@ -52,14 +52,13 @@ const MainView: React.FC = () => {
 
   useEffect(() => {
     getRooms(roomFilter).then((result) => {
-      console.log(result);
       if (result) {
         setRooms(result);
       }
     });
   }, [roomFilter]);
   return (
-    <div className="RoomView">
+    <div className="roomView">
       <div className="info">
         <Typography variant="body1">Need a room? Find a room.</Typography>
       </div>
