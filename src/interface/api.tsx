@@ -4,8 +4,8 @@ import {
 } from './utils';
 import { DBEvent, Module, Location } from './db-types';
 
-// const API_URL = 'https://api.whatsupkent.com/';
-const API_URL = 'http://localhost:4000';
+const API_URL = 'https://api.whatsupkent.com/';
+// const API_URL = 'http://localhost:4000';
 
 export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
   const sundayDate = getSundayDate(d);
@@ -129,7 +129,7 @@ export async function getAllSubjects(): Promise<string[] | null> {
 export async function getRooms(f: RoomFilterState): Promise<Array<Location> | null> {
   const query = `
   {
-    var(func: eq(event.start_date,"${f.startDate.toISOString().split('T')[0]}")) @filter(not (lt(event.start_date, "${f.startDate.toISOString()}")and le(event.end_date, "${f.startDate.toISOString()}"))or(ge(event.start_date,"${f.endDate.toISOString()}")and(gt(event.end_date,"${f.startDate.toISOString()}"))))  {
+    var(func: eq(event.start_date,"${f.startDate.toISOString().split('T')[0]}")) @filter(not (lt(event.start_date, "${f.startDate.toISOString()}")and le(event.end_date, "${f.startDate.toISOString()}"))or(ge(event.start_date,"${f.endDate.toISOString()}")and(gt(event.end_date,"${f.endDate.toISOString()}"))))  {
       locations as event.location  { 
         location.id
       }

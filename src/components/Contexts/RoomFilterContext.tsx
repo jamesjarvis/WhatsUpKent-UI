@@ -13,7 +13,7 @@ export const availableHours: Array<IntSelectValueType> = [
 
 const currentHour = getCurrentHour();
 const endHour = new Date(currentHour);
-endHour.setHours(currentHour.getHours() + 4);
+endHour.setHours(currentHour.getHours() + availableHours[0].value);
 export const defaultFilter: RoomFilterState = {
   startDate: currentHour,
   endDate: endHour,
@@ -25,7 +25,7 @@ interface ReducerType {
   type: ActionType;
 }
 
-export const reducer = (state = defaultFilter, action: ReducerType) => {
+export const reducer = (state = defaultFilter, action: ReducerType): RoomFilterState => {
   switch (action.type) {
     case ActionType.UPDATE:
       return action.payload;
@@ -38,6 +38,6 @@ export function init(initialFilter: RoomFilterState): RoomFilterState {
   return initialFilter;
 }
 
-const RoomFilterContext = createContext<any>(0);
+const RoomFilterContext = createContext<any>(defaultFilter);
 
 export default RoomFilterContext;
