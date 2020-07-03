@@ -4,8 +4,8 @@ import {
 } from './utils';
 import { DBEvent, Module, Location } from './db-types';
 
-const API_URL = 'https://api.whatsupkent.com/';
-// const API_URL = 'http://localhost:4000';
+const API_URL = 'http://api.whatsupkent.com/';
+// const API_URL = 'http://192.168.68.145:4000';
 
 export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
   const sundayDate = getSundayDate(d);
