@@ -4,8 +4,8 @@ import {
 } from './utils';
 import { DBEvent, Module, Location } from './db-types';
 
-const API_URL = 'https://api.whatsupkent.com/';
-// const API_URL = 'http://localhost:4000';
+// const API_URL = 'https://api.whatsupkent.com/';
+const API_URL = 'http://localhost:4000';
 
 export async function getAllThisWeek(d: Date): Promise<DBEvent[] | null> {
   const sundayDate = getSundayDate(d);
@@ -126,6 +126,25 @@ export async function getAllSubjects(): Promise<string[] | null> {
   }
 }
 
+export async function getAllLocations(): Promise<Location[] | null> {
+  const query = `
+  {
+    allLocations(func: has(location.loc), orderasc: location.id) {
+        id: location.id
+        name: location.name
+        disabledAccess: location.disabled_access
+        loc: location.loc
+      }
+  }`;
+  try {
+    const response = await axios.post(API_URL, query, { headers: { 'Content-Type': 'application/json' } });
+    const body: {allLocations: Array<Location>} = response.data;
+    return body.allLocations;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getRooms(f: RoomFilterState): Promise<Array<Location> | null> {
   const query = `
   {
@@ -150,7 +169,6 @@ export async function getRooms(f: RoomFilterState): Promise<Array<Location> | nu
     return null;
   }
 }
-
 
 export function getAllLectureTypes(): Array<string> {
   return ['LECTURE', 'SEMINAR', 'PRESENTATION', 'LAB', 'INDUCTION', 'PC', 'WORKSHOP', 'BOOKING', 'MEETING', 'PERFORMANCE', 'SCREENING', 'LECSEM', 'FIELDTRIP'];

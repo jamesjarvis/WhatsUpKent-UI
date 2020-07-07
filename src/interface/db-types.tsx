@@ -1,5 +1,10 @@
 import { Event } from 'react-big-calendar';
 
+export interface Loc {
+  type: string;
+  coordinates: [number, number];
+}
+
 export interface Error {
   Status: string;
   Error: string;
@@ -21,6 +26,7 @@ export interface Location {
   id: string;
   name?: string;
   disabledAccess?: boolean;
+  loc?: Loc;
 }
 
 export interface Scrape {

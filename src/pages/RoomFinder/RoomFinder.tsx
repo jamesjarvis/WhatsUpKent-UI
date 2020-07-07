@@ -5,7 +5,6 @@ import RoomFilterView from '../../components/RoomFilter/RoomFilter';
 import { RoomsViewWrapper } from '../../components/RoomsView/RoomsView';
 import './RoomFinder.scss';
 
-
 const RoomFinder: React.FC = () => {
   const [filterState, dispatch] = useReducer(reducer, defaultFilter, init);
 

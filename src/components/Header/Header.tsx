@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExploreIcon from '@material-ui/icons/Explore';
 import TodayIcon from '@material-ui/icons/Today';
 import React, { useState } from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
@@ -96,6 +97,11 @@ const Header: React.FC = () => {
             to="/rooms"
             primary="Free Room Finder"
             icon={<MeetingRoomIcon />}
+          />
+          <ListItemLink
+            to="/map"
+            primary="Event Map"
+            icon={<ExploreIcon />}
           />
         </List>
       </Drawer>
