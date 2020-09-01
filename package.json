@@ -29,7 +29,7 @@
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
     "typescript": "3.7.3",
-    "yarn": "^1.21.1"
+    "yarn": "^1.22.0"
   },
   "scripts": {
     "start": "react-scripts start",
